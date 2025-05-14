@@ -79,7 +79,7 @@ class AppWindow(QMainWindow):
         self.resultado_label.setText(f"{cidade_estado}\nLatitude: {lat}\nLongitude: {lon}")
 
     def ao_clicar(self):
-        nome = self.cidade_input.text().strip()
+        nome = self.cidade_input.text()
         estado = self.estado_input.currentText()
         if not nome:
             self.mostrar_popup("Aviso", "Digite o nome da cidade.")
@@ -87,17 +87,19 @@ class AppWindow(QMainWindow):
 
         resultado = buscar_coordenadas(nome, estado)
 
-        if "erro" in resultado:
-            self.mostrar_popup("Erro", resultado["erro"])
-        elif isinstance(resultado, list):
+        print(resultado)
+        if len(resultado) > 1:
             self.estado_input.clear()
-            self.estado_input.addItems(resultado)
+
+            for dict in resultado:
+                self.estado_input.addItem(dict["estado"].strip())
+
             self.estado_input.setEnabled(True)
             self.resultado_label.setText("Cidade encontrada em múltiplos estados. Selecione um.")
         else:
-            cidade = resultado["cidade"]
-            estado = resultado["estado"]
-            lat, lon = resultado["coordenadas"]
+            cidade = resultado[0]["cidade"]
+            estado = resultado[0]["estado"]
+            lat, lon = resultado[0]["coordenadas"]
             msg = f"{cidade} - {estado}\nLatitude: {lat}\nLongitude: {lon}"
             self.mostrar_popup("Resultado encontrado", msg)
             self.estado_input.setEnabled(False)

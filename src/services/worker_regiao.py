@@ -25,7 +25,6 @@ class WorkerEstado(threading.Thread):
                         "estado": cidade.estado,
                         "coordenadas": (cidade.latitude, cidade.longitude)
                     })
-                    self.observador.notificar_encerramento()
                     return
             else:
                 if self.estrategia.comparar(cidade.nome, self.cidade_busca):

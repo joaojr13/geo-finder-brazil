@@ -19,8 +19,7 @@ def load_cidades():
     if estado_dict and nome_dict:
         return nome_dict  # já carregado
 
-    url = "https://raw.githubusercontent.com/alanwillms/geoinfo/refs/heads/master/latitude-longitude-cidades.csv"
-    df = pd.read_csv(url, sep=';', encoding='utf-8')
+    df = pd.read_csv("src/data/lat_long_cidades.csv", sep=';', encoding='utf-8')
 
     for _, row in df.iterrows():
         nome = row['municipio'].strip()

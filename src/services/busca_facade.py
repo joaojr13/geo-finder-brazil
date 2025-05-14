@@ -27,12 +27,10 @@ class BuscaFacade:
         resultados = []
         try:
             while True:
-                resultado = resultado_queue.get(timeout=1)
+                resultado = resultado_queue.get(timeout=5)
                 resultados.append(resultado)
         except queue.Empty:
             pass
-
-        # observador.notificar_encerramento()
 
         for p in processos:
             p.join()
