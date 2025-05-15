@@ -6,14 +6,13 @@ import threading
 from data.cidades import get_cidades_por_estado, Cidade
 
 class WorkerEstado(threading.Thread):
-    def __init__(self, estado, cidade_busca, estado_busca, estrategia, resultado_queue, observador):
+    def __init__(self, estado, cidade_busca, estado_busca, estrategia, resultado_queue):
         super().__init__()
         self.estado = estado
         self.cidade_busca = cidade_busca
         self.estado_busca = estado_busca
         self.estrategia = estrategia
         self.resultado_queue = resultado_queue
-        self.observador = observador
 
     def run(self):
         cidades: list[Cidade] = get_cidades_por_estado(self.estado)
@@ -39,7 +38,7 @@ class WorkerEstado(threading.Thread):
         print(f'Thread {self.estado} nao encontrou - finalizando!')
 
 
-def worker_regiao(regiao, estados, cidade_busca, estado_busca, estrategia, resultado_queue, observador):
+def worker_regiao(regiao, estados, cidade_busca, estado_busca, estrategia, resultado_queue):
     threads = []
     for estado in estados:
         thread = WorkerEstado(
@@ -47,8 +46,7 @@ def worker_regiao(regiao, estados, cidade_busca, estado_busca, estrategia, resul
             cidade_busca=cidade_busca,
             estado_busca=estado_busca,
             estrategia=estrategia,
-            resultado_queue=resultado_queue,
-            observador=observador
+            resultado_queue=resultado_queue
         )
         threads.append(thread)
         thread.start()

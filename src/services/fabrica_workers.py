@@ -14,13 +14,13 @@ REGIOES = {
 }
 
 
-def criar_processos_regiao(cidade_busca, estado_busca, estrategia, resultado_queue, observador):
+def criar_processos_regiao(cidade_busca, estado_busca, estrategia, resultado_queue):
     processos = []
     for regiao, estados in REGIOES.items():
         processo = Process(
             target=worker_regiao,
             args=(regiao, estados, cidade_busca, estado_busca,
-                  estrategia, resultado_queue, observador)
+                  estrategia, resultado_queue)
         )
         processos.append(processo)
         print(f'Processo {regiao} criado')

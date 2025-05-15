@@ -73,7 +73,7 @@ class AppWindow(QMainWindow):
 
     def ao_clicar_historico(self, item):
         if item.parent() is not None:
-            return  # ignora subitens
+            return
         lat, lon = item.data(0, Qt.ItemDataRole.UserRole)
         cidade_estado = item.text(0)
         self.resultado_label.setText(f"{cidade_estado}\nLatitude: {lat}\nLongitude: {lon}")
@@ -95,7 +95,8 @@ class AppWindow(QMainWindow):
                 self.estado_input.addItem(dict["estado"].strip())
 
             self.estado_input.setEnabled(True)
-            self.resultado_label.setText("Cidade encontrada em múltiplos estados. Selecione um.")
+            # self.resultado_label.setText("Cidade encontrada em múltiplos estados. Selecione um.")
+            self.mostrar_popup("Atenção", "Cidade encontrada em múltiplos estados. Selecione um.")
         else:
             cidade = resultado[0]["cidade"]
             estado = resultado[0]["estado"]
