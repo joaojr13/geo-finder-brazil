@@ -27,7 +27,7 @@ class FabricaProcessosRegiao:
                 estrategia=self.estrategia,
                 resultado_queue=self.resultado_queue
             )
-            processo = Process(target=fabrica_threads)  # direto!
+            processo = Process(target=fabrica_threads)
             processos.append(processo)
             print(f'Processo {regiao} criado')
         return processos
