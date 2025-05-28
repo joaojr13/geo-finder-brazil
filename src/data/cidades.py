@@ -9,15 +9,12 @@ class Cidade:
     latitude: float
     longitude: float
 
-# Dicionário indexado por estado → lista de cidades
 estado_dict: dict[str, list[Cidade]] = defaultdict(list)
-
-# Dicionário indexado por nome da cidade → lista de objetos Cidade (útil para autocomplete e ambiguidades)
 nome_dict: dict[str, list[Cidade]] = defaultdict(list)
 
 def load_cidades():
     if estado_dict and nome_dict:
-        return nome_dict  # já carregado
+        return nome_dict
 
     df = pd.read_csv("src/data/lat_long_cidades.csv", sep=';', encoding='utf-8')
 

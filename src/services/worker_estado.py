@@ -1,7 +1,3 @@
-# src/services/worker_regiao.py
-"""
-Worker de região: cria threads por estado e realiza busca local concorrente.
-"""
 import threading
 from data.cidades import get_cidades_por_estado, Cidade
 
@@ -24,6 +20,7 @@ class WorkerEstado(threading.Thread):
                         "estado": cidade.estado,
                         "coordenadas": (cidade.latitude, cidade.longitude)
                     })
+                    print(f'Thread {self.estado} encontrou: {cidade.nome}/{cidade.estado}')
                     return
             else:
                 if self.estrategia.comparar(cidade.nome, self.cidade_busca):
@@ -32,25 +29,7 @@ class WorkerEstado(threading.Thread):
                         "estado": cidade.estado,
                         "coordenadas": (cidade.latitude, cidade.longitude)
                     })
-                    print(f'Thread {self.estado} encontrou!')
+                    print(f'Thread {self.estado} encontrou: {cidade.nome}/{cidade.estado}')
                     return
 
-        print(f'Thread {self.estado} nao encontrou - finalizando!')
-
-
-def worker_regiao(regiao, estados, cidade_busca, estado_busca, estrategia, resultado_queue):
-    threads = []
-    for estado in estados:
-        thread = WorkerEstado(
-            estado=estado,
-            cidade_busca=cidade_busca,
-            estado_busca=estado_busca,
-            estrategia=estrategia,
-            resultado_queue=resultado_queue
-        )
-        threads.append(thread)
-        thread.start()
-        print(f'Processo {regiao} - Thread {estado} criada')
-
-    for thread in threads:
-        thread.join()
+        print(f'Thread {self.estado} não encontrou nenhuma cidade correspondente - finalizando')

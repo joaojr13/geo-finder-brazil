@@ -1,15 +1,11 @@
 import difflib
-
-
 class EstrategiaComparacao:
     def comparar(self, entrada: str, destino: str) -> bool:
         raise NotImplementedError("Estratégia de comparação não implementada.")
 
-
 class ComparacaoExata(EstrategiaComparacao):
     def comparar(self, entrada: str, destino: str) -> bool:
         return entrada.strip().lower() == destino.strip().lower()
-
 
 class ComparacaoFuzzy(EstrategiaComparacao):
     def comparar(self, entrada: str, destino: str) -> bool:
